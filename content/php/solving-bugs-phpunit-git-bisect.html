@@ -1,0 +1,175 @@
++++
+date = "2017-01-26T21:44:58+05:30"
+draft = false
+title = "Solving bugs with phpunit and git bisect"
+
+aliases = [
+"/solving-bugs-phpunit-git-bisect/",
+]
+
++++
+
+
+<div class="row">
+
+    <div class="col">
+        <div class="card" style="font-family: 'Open Sans', sans-serif;">
+
+            <div class="card-block">
+
+                <div class="card-title">
+                    <h2
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                        Solving Bugs With Php Unit and Git Bisect</h2>
+                </div>
+
+
+                <section class="post_content clearfix" itemprop="articleBody">
+                    <p>Sometimes as developers we don’t always catch everything in our test, bugs being the tricky
+                        things they are will always slip through the net. When they do we need to fix them, but where do
+                        we begin?</p>
+                    <p>The answer, PHPUnit + git bisect, using git bisect and PHPUnit we can quickly narrow down what
+                        commit caused the bug, which should allow us to find what caused and therefore solve the bug
+                        really quickly.</p>
+                    <p>To see this in action let’s look at a very simple example. We have a FakeClass which contains a
+                        single method who’s job is to return three things. The class looks something like this.</p>
+
+                    <pre>
+                    <code class="php hljs">class FakeClass
+{
+	/**
+	 * Returns three things
+	 *
+	 * @return array
+	 */
+	public function getThreeThings()
+	{
+		$things = ['one', 'two', 'three'];
+
+		return $things;
+	}
+}
+                    </code>
+                    </pre>
+
+                    <p>The class does a very simple thing, and we’re convinced it’s so simple we’ve not written a unit
+                        test. Unfortunately this FakeClass doesn’t stay simple forever and over time we’ve ended up with
+                        a lot of changes to this file.</p>
+
+
+                    <pre>
+                    <code class="diff hljs">ad1a436 Add get four things method
+708f57d Add return value PHPDoc
+d4a81a4 Add phpdoc
+33f9b00 Add get two things method
+61deef0 Add returns phpdoc comment
+85730ab Add get three things to FakeClass</code>
+                        </pre>
+
+
+                    <p>Somewhere in these commits, someone has broken the getThreeThings method, the customer is not
+                        happy! First let’s create the unit test we left out in our haste to get the code shipped.</p>
+
+                    <pre>
+                    <code class="php hljs">class FakeClassTest extends PHPUnit_Framework_TestCase
+{
+        private $fakeClass;
+
+        public function setUp()
+        {
+                $this->fakeClass = new FakeClass();
+        }
+
+        public function testGetThreeThings()
+        {
+                $things = $this->fakeClass->getThreeThings();
+                $this->assertEquals(3, sizeof($things));
+        }
+}
+PHPUnit 3.7.28 by Sebastian Bergmann.
+
+Configuration read from /home/alan/workspaces/bisect-log/phpunit.xml
+
+F
+
+Time: 44 ms, Memory: 3.25Mb
+
+There was 1 failure:
+
+1) FakeClassTest::testGetThreeThings
+Failed asserting that 4 matches expected 3.
+
+/home/alan/workspaces/bisect-log/tests/FakeClassTest.php:14
+
+FAILURES!
+Tests: 1, Assertions: 1, Failures: 1.
+                        </code>
+                        </pre>
+                    <p>Great now we have a test, and we know it’s failing. How can we find out which of the above
+                        commits caused the error?</p>
+                    <p>First we need to enter git bisect mode.</p>
+                    <pre class="prettyprint lang=bash"><span class="pln">git bisect start</span></pre>
+                    <p>We know that this functionality worked at our first commit so let’s mark that commit as good.</p>
+                    <pre class="prettyprint lang=bash"><span class="pln">git bisect good </span><span class="lit">85730ab</span></pre>
+                    <p>And we know that the current commit is bad, so let’s mark that as bad.</p>
+                    <pre class="prettyprint lang=bash"><span class="pln">git bisect bad fbe6fb8</span></pre>
+                    <p>Now we’ve done everything we need to find the broken commit. All that’s left is to run our unit
+                        test with git bisect.</p>
+                    <pre class="prettyprint lang=bash"><span class="pln">git bisect run phpunit tests</span><span
+                            class="pun">/</span><span class="typ">FakeClassTest</span><span class="pun">.</span><span
+                            class="pln">php</span></pre>
+                    <p>Git moves through the commits using a binary search algorithm to find the first broken commit as
+                        quickly as possible.</p>
+                    <p>After git bisect has zoomed through testing the commits it tells us the exact commit which caused
+                        the problem.</p>
+                    <pre class="prettyprint lang=bash"><span
+                            class="pln">ad1a436f0c15676cd5251e1d73c3af667e739a72 </span><span class="kwd">is</span><span
+                            class="pln"> the first bad commit</span></pre>
+                    <p>If we do a git diff we see:</p>
+                    <pre>
+                    <code class="diff hljs">git diff ad1a436 HEAD
+
+diff --git a/src/FakeClass.php b/src/FakeClass.php
+index bd8a9a3..bbdf3a0 100644
+--- a/src/FakeClass.php
++++ b/src/FakeClass.php
+@@ -2,22 +2,13 @@
+ class FakeClass
+ {
+        /**
+-        */
+-       public function getFourThings()
+-       {
+-               $things = ['one', 'two', 'three'];
+-
+-               return $things;
+-       }
+-
+-       /**
+         * Returns three things
+         *
+         * @return array
+         */
+        public function getThreeThings()
+        {
+-               $things = ['one', 'two', 'three', 'four'];
++               $things = ['one', 'two', 'three'];
+
+                return $things;
+        }
+}
+                        </code>
+
+                    </pre>
+                    <p>The problem is pretty obvious now. I added a ‘four’ to the array in the getThreeThingsMethod, how
+                        stupid.</p>
+                    <p>I hope this blog post has shown how powerful git bisect is, and although this example was really
+                        simple, you can imagine how useful this is.</p>
+                    <p>The code behind this blog post can be found at <a
+                            href="https://github.com/Alan01252/git-phpunit-bisect-test">https://github.com/Alan01252/git-phpunit-bisect-test<br>
+                    </a></p>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
