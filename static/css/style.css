@@ -1,6 +1,7 @@
 body {
     background: cadetblue;
     width: 100%;
+    overflow-x:hidden;
 }
 
 .card-title {
