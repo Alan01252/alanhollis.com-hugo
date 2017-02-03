@@ -1,0 +1,152 @@
++++
+date = "2017-01-26T21:44:58+05:30"
+draft = false
+title = "Go compared with PHP arrays and slices"
+
+aliases = [
+"/go-compared-with-php-arrays-and-slices"
+]
+
++++
+
+
+<div class="row">
+
+    <div class="col">
+        <div class="card" style="font-family: 'Open Sans', sans-serif;">
+
+            <div class="card-block">
+
+                <div class="card-title">
+                    <h2
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                        Go compared with php. Arrays and slices</h2>
+                </div>
+
+
+                <p>This is part of a series of articles comparing the language of Go to PHP.</p>
+
+                <p>
+                    One of the things I love about PHP is how flexible and easy to use in the language, want an array of
+                    strings just type
+                </p>
+
+                <h3 style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                    Creating
+                </h3>
+                <p>
+                    Create an array in PHP
+                </p>
+                <pre><code class="php hljs">$myStringArray = ["One","Two","Three"];</code>
+                </pre>
+                <p>
+                    In Go creating the above is a little more verbose and like variable assignment above there's also
+                    multiple ways to create a slice. The most similar way to that of PHP is as follows.
+                </p>
+                <pre><code class="go hjls">myStringArray := []string{"One","Two","Three"}</code>
+                </pre>
+                <h3
+                        style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                    Appending
+                </h3>
+                <p>
+                    Things become a little trickier when you want to append to an array. In PHP world this is easy
+                </p>
+                <pre><code
+                        class="php hljs">$myStringArray=["One", "Two", "Three"];\n
+$myStringArray[] = "Four";</code>
+                </pre>
+                <p>
+                    In Go you need to use the global append function
+                </p>
+
+                <pre><code class="go hjls">myStringArray := []string{"One","Two","Three"}
+myStringArray = append(myStringArray,"Four")
+fmt.Println(myStringArray)</code>
+                    </pre>
+                <h3
+                        style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                    Extracting
+                </h3>
+                <p>
+                    PHPs vast suite of inbuilt array functions make working with arrays simple. For instance to extract
+                    part
+                    of an array in PHP you can use the array_slice function.
+                </p>
+
+                <pre><code class="php hljs">$myArray = ["a","b","c","d","e"];
+$myNewArray = array_slice($myArray,2,2); // ["c","d"]</code>
+                </pre>
+                <p>
+                    To achieve the same functionality in Go a little piece of syntactical magic is required
+                </p>
+
+                <pre><code class="go hjls">myArray := []string{"a", "b", "c", "d", "e"}
+myNewArray := append([]string{},myArray[2:4]...) // ["c","d"]</code>
+                    </pre>
+                <h3
+                        style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                    Iterating
+                </h3>
+                <p>Iterating over a range of any function in PHP can be done using the construct.</p>
+
+                <pre><code class="php hljs">$myStringArray = ["One","Two","Three"]
+foreach ($myStringArray as $key =&gt; value) {
+  echo $key." ".$string."\r\n";
+}
+//0 One
+//1 Two
+//3 Three</code>
+                </pre>
+                <p>
+                    In Go we use the range construct
+                </p>
+
+                <pre><code class="go hjls">myStringArray := []string{"one","two","three"}
+for key,value := range myStringArray {
+  fmt.Println(key, value)</code>
+}</pre>
+                <h3
+                        style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                    Imploding and Exploding
+                </h3>
+                <p>
+                    Joining an array into a string in PHP can be done using the built in implode function
+                </p>
+
+                <pre><code class="php hjls">$myStringArray = ["One","Two","Three"];
+$myString = implode(" ",$myStringArray);
+echo $myString; // One Two Three</code>
+                </pre>
+                <p>
+                    Golang uses the join function from the strings package which you are required to import to use
+                </p>
+                <pre><code class="go hjls">package main
+
+import (
+  "fmt"
+  "strings"
+)
+
+func main() {
+  myStringArray := []string{"one","two","three"}
+  fmt.Println(strings.Join(myStringArray, " "))
+}</code>
+                </pre>
+                To take a string and turn it into an array in PHP we use the explode function
+                <pre><code class="php hjls">$myString = "One Two Three";
+$myStringArray = explode(" ",$myString); // ["One", "Two", "Three"]</code>
+                </pre>
+                <p>
+                    To take a string and turn it into an array in Golang we again need to use the strings package, but
+                    this
+                    time use the split function
+                </p>
+                <pre><code class="go hjls">myString := "one two three"
+myStringArray := strings.Split(myString, " ")
+fmt.Println(myStringArray)</code>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,196 @@
++++
+date = "2017-01-26T21:44:58+05:30"
+draft = false
+title = "Comparing go with PHP"
+
+aliases = [
+"/comparing-go-with-php"
+]
++++
+
+<div class="row">
+
+    <div class="col">
+        <div class="card" style="font-family: 'Open Sans', sans-serif;">
+
+            <div class="card-block">
+
+                <div class="card-title">
+                    <h2
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                        Go compared with php. Arrays and slices</h2>
+                </div>
+
+                <p>This is part of a series of articles comparing the language of Go to PHP</p>
+
+
+                <h3 style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                    Variable assignment</h3>
+                <p>
+                    In PHP variable assigned is very simple :
+                </p>
+                <pre><code class="php hljs">$myString = "My String";</code>
+                </pre>
+                <p>
+                    In Go this is a little different. Go is statically typed meaning those familiar with other
+                    statically
+                    typed languages would expect to see something like
+                </p>
+                <pre><code class="java hljs">String myString = "My String";</code>
+                </pre>
+                <p>
+                    In Go the type can be inferred from the expression. For instance to assign a string to a variable in
+                    Go
+                    you can do any one of the following:
+                </p>
+                <pre><code class="go hljs">>var myString = "hello"
+//or
+myString := "Hello"</code>
+                </pre>
+                <p>
+                    To change the value later Go a single = is used
+                </p>
+                <pre><code class="go hljs">myString := "myString"
+myString = "foo"
+fmt.Println(myString) //Prints out Foo</code>
+                </pre>
+                <p>
+                    I prefer the way variable assignment is done in Go. It makes it very easy to see where the variable
+                    has
+                    been instantiated, where it's been changed and in 99% of times the type inference isn't an issue.
+                </p>
+
+                <p>
+                    Also note that the use of semicolons in Golang is optional
+                </p>
+
+                <h3 style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                    If statements</h3>
+                If statements are very similar in both PHP and Golang in PHP
+                <pre><code class="php hljs">if($i < 3) {
+  echo "$i is less than 3";
+                     </code>
+}</pre>
+                In Go
+                <pre><code class="go hljs">if x > 0 {
+   fmt.Println(x,"is greater than zero")
+}</code>
+                </pre>
+                <p>
+                    The biggest difference are the optional brackets around the if statement. Braces are also mandatory
+                    and
+                    the first brace must be on the same line as the if.
+                </p>
+                <p>
+                    This fits with the <a
+                        href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md">psr-2
+                    PHP fig standards</a> and as such is really familiar to most PHP developers.
+                </p>
+                <p>
+                    The biggest difference is it's common to see an initialization statement at the beginning of the if
+                    statement, so instead of seeing this:
+                </p>
+
+                <pre><code class="php hljs">$i = getMyVar();
+if($i < 3) {
+  echo "$i is less than 3";
+
+}</code>
+                </pre>
+                <p>
+                    You see
+                </p>
+                <pre><code class="go hljs">if x:=getMyVar(); x > 0 {
+    fmt.Println(x,"is greater than zero")
+}</code>
+                </pre>
+                <p>
+                    Personally I'm not keen on this syntax as I find it slightly harder to realise at a glance what the
+                    if
+                    statement is checking, but this is purely a matter of preference.
+                </p>
+
+                <h3 style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                    Loops</h3>
+                <p>
+                    Go takes an usual step when it comes to looping. The familiar while loop seen is most of languages
+                    based
+                    on C has been unified with the for loop meaning to do this
+                </p>
+                <pre><code class="php hljs">while($i < 3) {
+$i++
+}</code>
+                </pre>
+                In Go you write
+                <pre><code class="go hjls">for i < 4 {
+    i++
+}</code>
+                </pre>
+                <p>
+                    When I'm writing PHP code I tend to use <em>while</em> for longer running loops, and
+                    <em>for</em> for loops over a finite set of data. I find it harder when writing Go code to see, at a
+                    glance see what type of loop, the code is performing. This has caused me to code in infinite loops
+                    on
+                    more than one occasion whilst experimenting with Go.
+                </p>
+
+                <p>
+                    Go also uses the range clause to achieve similar functionality to PHP's foreach. Where in PHP you
+                    would
+                    do this
+                </p>
+                <pre><code class="php hjls">$myArrayOfThings = [1,2,3,4];
+foreach($myArrayOfThings as $key => $value) {
+  echo $key."-".$value."\n"; //0-1 1-2 2-3 3-4
+}</code>
+                </pre>
+                In Go the range statement is used instead
+                <pre><code class="go hjls">myArrayOfInts := []int{1,2,3,4,5,6}
+for key,value := range myArrayOfInts {
+    fmt.Println(key,value)
+}</code>
+                </pre>
+                <p>
+                    One of the things I dislike about PHP is the ordering of the foreach statement, and as such I prefer
+                    the
+                    way Go does it. One minor annoyance with Go is that if you don't use a variable in the code it won't
+                    compile. So if you only wish to use the key in the above you can use the magic _ character instead.
+                </p>
+                <pre><code class="go hjls">myArrayOfInts := []int{1,2,3,4,5,6}
+for key,_ := range myArrayOfInts {
+    fmt.Println(key)
+}</code>
+                </pre>
+
+                <h3 style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                    Functions</h3>
+                <p>
+                    Functions in Go allow multiple return values which make moving from PHP to Go a lot easier than it
+                    might
+                    be moving from other dynamic languages to static languages.
+                </p>
+
+                <p>
+                    In PHP a function can return multiple types, this is useful in a lot of ways for instance, dealing
+                    with
+                    errors. An example of this in PHP would be:
+                </p>
+                <pre><code class="php hjls">$result = updateSomething();
+if(!$result) {
+    return false;
+}
+echo "Updated id ".$id;</code>
+                    </pre>
+                <p>
+                    In Go we can use the fact that a function can return multiple values to increase code clarity whilst
+                    achieving the same effect.
+                </p>
+                <pre><code class="go hjls">int, err := updateSomething()
+if err == false {
+  return false
+}
+fmt.Println("Updated id",id)</code>
+                    </pre>
+                <p>This is a very brief look at Go in comparison to PHP. If you've enjoyed this post and
+                    would like to see
+                    more please leave a comment.</p>

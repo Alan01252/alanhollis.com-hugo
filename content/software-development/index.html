@@ -1,0 +1,236 @@
++++
+date = "2017-02-01T12:44:58+05:30"
+draft = false
+title = "Software Development"
++++
+
+
+<div class="row">
+
+    <div class="col">
+        <div class="card" style="font-family: 'Open Sans', sans-serif;">
+
+            <div class="card-block">
+
+                <div class="card-title">
+                    <h2
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                        Software Development</h2>
+                </div>
+
+
+                <p>
+                    <a href="#portfolio">Portfolio </a>| <a href="#tutorials">Tutorials</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col">
+        <div class="card" style="font-family: 'Open Sans', sans-serif;">
+
+            <div class="card-block">
+
+                <div class="card-title">
+                    <h2
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                        <a name="portfolio">Portfolio</a></h2>
+                </div>
+
+                <p>A summary of some the projects I'm most proud of during my freelance career</p>
+
+                <div class="card-title">
+                    <h3
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                        Assist-CKD.org</h3>
+                </div>
+
+                <p>
+                    Assist-CKD is a quality improvement project supported by The Health Foundation which is looking to
+                    identify patients with a high risk of Chronic Kidney Disease progression.
+                </p>
+
+                <p>
+                    The application is designed to take data from external systems in the NHS and then allow lab
+                    technicians
+                    to review the data in a way which makes spotting if a person is likely to be at risk of Chronic
+                    Kidney Disease
+                    Easier.
+                </p>
+
+                <p>
+                    The existing application had performance and maintenance problems as it was tightly coupled to SQL
+                    Server
+                    which meant each trust using the software had to purchase an expensive software license in order to
+                    take part
+                    in the trial. The application was re-written to allow a choice of relational database servers, from
+                    MySQL To
+                    SQLite.
+                </p>
+
+                <p>
+                    The incorporation of SQLLite into the software also allowed individual trusts to be up and running
+                    as
+                    minimal involvement from IT departments were required. The software could be installed and a trust
+                    up and
+                    running in less than five minutes.
+                </p>
+
+                <p>
+                    Written using electron.js the application is able to run on multiple environments ( windows, mac )
+                    using only one codebase. The wealth of libraries written for node.js also meant the existing
+                    application could be re-written quickly, to a greater standard than the original quickly and
+                    inexpensively.
+                </p>
+
+                <p>
+                    Features Include:
+                </p>
+                <ul>
+                    <li>Fast import of CSV files containing millions of records</li>
+                    <li>Support for multiple databases utilising the sequelize.js library</li>
+                    <li>Database migrations and squirrel for easy updates to the application</li>
+                    <li>Automated testing via Karma.js, Phantom.js and Karma-Electron</li>
+                </ul>
+
+                <div class="card-title">
+                    <h3
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                        AgriCamera.co.uk</h3>
+                </div>
+
+                <p>
+                    AgriCamera.co.uk supplies CCTV to the agricultural industry. Due to the remote locations of the
+                    installation locations the software had to be designed to work with low bandwidth locations.
+                    H.264 was not a viable solution for AgriCamera due to the high latency involved which would render
+                    the cameras which ability to move based on user feedback in real-time useless.
+                </p>
+
+                <p>
+                    AgriCamera runs a hardware on the customers wifi which then transmits a compressed mjpeg stream to a
+                    centralised application
+                    built using Node.Js. Transportation of the images is achieved through the use of socket.io. The
+                    centralised engine allows
+                    a single mjpeg stream to be shared to multiple viewers without increasing the bandwidth usage at the
+                    clients site.
+                </p>
+
+                <p>
+                    AgriCamera has a mobile application written using Ionic/PhoneGap allowed quick iteration of design
+                    and
+                    ideas across the most number of devices. The mobile application quickly became one of the most
+                    popular
+                    ways for clients to access their mobile applications. Particular attention had to be paid to the
+                    performance of the application in order to make sure that
+                    the quality of the stream remained high. The application also provided a "low bandwidth mode" for
+                    those
+                    customers who's mobile signal was often poor.
+                </p>
+
+                <p>
+                    Features Include:
+                </p>
+                <ul>
+                    <li>Ability to choose multiple streams based on the speed of the customers connection</li>
+                    <li>Full permissions based viewing of cameras</li>
+                    <li>Motion Detection based recordings</li>
+                    <li>Ability to "mask" sections of an image for greater motion accuracy</li>
+                    <li>Automated scalability of service</li>
+                    <li>Real-time logging and system diagnosis</li>
+                    <li>Secure remote upates</li>
+                </ul>
+
+                <p>
+                    This technology allows AgriCamera to deliver a unique value proposition to their clients.
+                </p>
+
+
+                <div class="card-title">
+                    <h3
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                        The-Hpo.com</h3>
+                </div>
+
+                <p>
+                    The HPO provide an online auditing tool to help their clients better understand their businesses.
+                    The software driving their auditing tool had become hard to maintain and wasn't able to cope with
+                    the
+                    amount of data that The HPO were now handling. The customer front end also lacked visual appeal and
+                    needed to become more flexible as customers began looking for more ways to understand their data.
+                </p>
+
+                <p>
+                    The application required the design and implementation of a data warehouse. Using the techniques
+                    from
+                    the book <a
+                        href="https://www.amazon.co.uk/Agile-Data-Warehouse-Design-Collaborative/dp/0956817203"></a>
+                    the HPO to build a warehouse which would fit their needs, and incorporate their existing
+                    algorithms whilst performing much more effectively than the previous version of the code.
+                </p>
+
+                <p>
+                    A reporting front end was creating using Yii which allowed customers to view their reports. The
+                    backend
+                    involves some non-trivial SQL queries, and careful consideration of what and how to index the data
+                    in the
+                    MySQL database was needed.
+                </p>
+
+                <p>
+                    Integration with ordering data was achieved by writing a custom extract transform load application
+                    utilising the Apache Camel
+                    Library.
+                    This allowed The HPO to quickly, easily and robustly build a integration engine between the
+                    normalised OLTP database and
+                    the OLAP database used for the warehouse.
+                </p>
+
+                <p>
+                    Features Include:
+                </p>
+                <ul>
+                    <li>Full frontend application allowing customisation of templates and reporting</li>
+                    <li>Extract Transform Load application</li>
+                    <li>Design and architecture of a data warehouse</li>
+                    <li>Full front end reporting system, utilising HighCharts and the Yii Php Framework</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col">
+        <div class="card" style="font-family: 'Open Sans', sans-serif;">
+
+            <div class="card-block">
+
+                <div class="card-title">
+                    <h2
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                        <a name="tutorials">Tutorials</a></h2>
+                </div>
+
+
+                <p>Some of the tutorials guides I've written over the years</p>
+
+                <div class="card-title">
+                    <h3
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                        PHP</h3>
+
+                </div>
+                <ul>
+                    <li><a href="/solving-bugs-phpunit-git-bisect/">Solving bugs with PHPUnit and git bisect</a></li>
+                    <li><a href="/comparing-go-with-php/">Go compared with PHP</a></li>
+                    <li><a href="/go-compared-with-php-arrays-and-slices/">Go compared with PHP. Arrays and Slices</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
