@@ -1,8 +1,9 @@
 body {
-    background: cadetblue;
+    background: white;
     width: 100%;
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
+
 
 .card-title {
     font-family: 'Nixie One';
@@ -51,6 +52,7 @@ body {
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
     margin-bottom: 20px;
+    border: 2px solid cadetblue;
 }
 
 h4 {
@@ -62,7 +64,7 @@ h4 {
 }
 
 .icons {
-    color: white;
+    color: cadetblue;
     font-size: 30px;
     padding: 10px;
 }
