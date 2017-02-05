@@ -93,10 +93,13 @@ h3 {
     font-weight:bolder;
 }
 
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
-    color: #fff;
+.card:hover, .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
+    color: #fff !important;
     background-color: #0b203a;
     border-color: #0b203a;
+}
+.card:hover .card-title, .card-block:hover, .card-title:hover {
+    color: white;
 }
 
 .form-control:focus {
