@@ -4,7 +4,6 @@ body {
     overflow-x: hidden;
 }
 
-
 .card-title {
     font-family: 'Nixie One';
     font-weight: bold;
@@ -90,16 +89,19 @@ h3 {
     border-color: cadetblue;
     cursor: pointer;
     color: #0b203a;
-    font-weight:bolder;
+    font-weight: bolder;
 }
 
-.card:hover, .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
     color: #fff !important;
     background-color: #0b203a;
     border-color: #0b203a;
 }
-.card:hover .card-title, .card-block:hover, .card-title:hover {
+
+.index .card:hover, .index .card:hover .card-title {
     color: white;
+    background-color: #0b203a;
+    border-color: #0b203a;
 }
 
 .form-control:focus {
