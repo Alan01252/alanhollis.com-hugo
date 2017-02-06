@@ -1,0 +1,140 @@
++++
+date = "2017-02-01T12:44:58+05:30"
+draft = false
+title = "Architecture"
++++
+
+<div class="row">
+
+    <div class="col">
+        <div class="card" style="font-family: 'Open Sans', sans-serif;">
+
+            <div class="card-block">
+
+                <div class="card-title">
+                    <h2
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">Architecture</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col">
+        <div class="card" style="font-family: 'Open Sans', sans-serif;">
+
+            <div class="card-block">
+
+                <div class="card-title">
+                    <h2
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">Case Studies</h2>
+                </div>
+
+                <div class="card-title">
+                    <h3
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                        TheFarmingForum.co.uk</h3>
+                </div>
+
+                <p>The Farming Forum was gaining popularity and quickly entering a level where the risks of running the
+                    forum single on a server were no longer appropriate for the business.</p>
+
+                <p>
+                    Xenforo is not designed to run on multiple servers out of the box and therefore understanding how
+                    the existing system worked was crucial to the design of any other server. Assets were the big
+                    problem
+                    to solve as in order to move from one server to multiple, uploads and attachments created by forum
+                    members would need to be moved into the cloud.
+                </p>
+
+                <p>
+                    Plugins were found for Xenforo which automated the process of assets being uploaded to the cloud.
+                    A custom bash script using S3cmd was written which would transfer the existing assets into S3 and
+                    update
+                    the Xenforo database as appropriate.
+                </p>
+
+                <p>
+                    High availability would be achieved by utilising Linodes nodebalancers. A single nodebalancer would
+                    sit in front of the web servers and round robyn the traffic between them. Memcached was chosen to
+                    store
+                    the sessions information and the Xenforo software adapted to write all session information to each
+                    memcached instance.
+                </p>
+
+                <p>
+                    The database would be run in Master / Master mode with only one database being connected to at any
+                    point
+                    by the Xenforo software. Monitoring had shown that the biggest bottleneck in the application was CPU
+                    on the
+                    web servers and therefore scaling the database was not a priority. A Rundeck task would be created
+                    that
+                    would allow the master database server to swap over to the slave in case of downtime.
+                </p>
+
+                <img src="/tff.png" class="img-rounded img-responsive" style="width: 100%;">
+
+                <div class="card-title">
+                    <h3
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                        The-Hpo.co.uk</h3>
+                </div>
+
+                <p>
+                    The HPO came to me looking for help updating a critical legacy application to something more robust,
+                    faster and reliable.
+                </p>
+
+                <p>
+                    By looking and understanding the existing system and how it interacted we were able to build a new
+                    solution
+                    which provided all the functionality of the previous system and satisifed all the critera of above.
+                </p>
+
+                <p>
+                    The new system would comprise of five layers:
+                </p>
+
+                <ul>
+                    <li>An API to interact with the relational database</li>
+                    <li>A new thin client Javascript front end client</li>
+                    <li>A data warehouse which would store data in third normal form</li>
+                    <li>An Extract Transform Load application to perform the data integration</li>
+                    <li>A reporting engine to sit in front of the datawarehouse to render the data in a meaningful way
+                    </li>
+                </ul>
+
+                <p>
+                    The application would be all based on the cloud. A single instance would run all the software
+                    together
+                    to keep costs low and the architecture simple. Thought was given as to how this could be split in
+                    the
+                    future but this design best fit the customers needs at the present time. PHP and Javascript
+                    frameworks
+                    where chosen based on the clients existing experience with these technologies.
+                </p>
+
+                <p>
+                    The ETL engine would be built using the Apache Camel Library. Camel supports a number of enterprise
+                    integration patters which were well suited to this project. Camel supports being able to write
+                    custom
+                    processors in Java and this was used to handle the more complex data transformations that were
+                    needed
+                    to implement HPO's reporting algorithms.
+                </p>
+
+                <p>
+                    SendGrid would be used to handle the emailing as this gave the customer far more visibility over
+                    emails
+                    that were sent from the reporting engine than before, and would reduce what was a large contributor
+                    to
+                    the support overheads the customer was having. This also saved on development time of the final
+                    application.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
