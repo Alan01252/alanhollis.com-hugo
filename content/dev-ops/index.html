@@ -44,16 +44,39 @@ title = "Devops"
                 </div>
 
                 <p>
-                    Agricamera's entire software environment was built with DevOps in mind from the start. Before any new
-                    software was written careful thought was taken to make sure the development environments were immediately
-                    reproducible by issuing just a couple of commands using Vagrant and Ansible.
+                    Agricamera's entire software environment was built with DevOps in mind from the start. Before any
+                    new
+                    software was written careful thought was taken to make sure the development environments were
+                    immediately
+                    reproducible by issuing just a couple of commands using Vagrant and Ansible. All of Agricamera's
+                    services are cloud based.
                 </p>
 
                 <p>
-                    This forethought meant deploying to production was just an extension of the development process. Ansible
-                    scripts were created which allowed every aspect of Agricameras architecture to be deployed and re-deployed instantly.
-                    This included provisioning of highly available node, web and database servers. As well as the management of 100's of
+                    This forethought meant deploying to production was just an extension of the development process.
+                    Ansible
+                    scripts were created which allowed every aspect of Agricamera's architecture to be deployed and
+                    re-deployed instantly.
+                    This included provisioning of highly available node, web and database servers. As well as the
+                    management of 100's of
                     remote devices deployed up and down the country.
+                </p>
+
+                <p>
+                    In order to monitor the servers Agricamera use OMD/Check_MK ( wrappers around nagios ) which provide
+                    a number of
+                    standard "off the shelf checks" on the system, as well as custom checks written especially for
+                    Agricamera's
+                    software. Logstash and Kibana are used to give the ops team insight into customers problems with
+                    bespoke
+                    dashboards written to help better understand the systems. Integration with HipChat allows rapid
+                    response
+                    when problems do occur.
+                </p>
+
+                <p>
+                    Agricameras database are automatically backed up to Amazon S3 using cron jobs written in Ansible.
+                    The database restore process is also automated for simple "worst case scenario" data restorations.
                 </p>
             </div>
         </div>
