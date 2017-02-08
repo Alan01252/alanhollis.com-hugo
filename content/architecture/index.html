@@ -57,11 +57,11 @@ title = "Architecture"
                 </p>
 
                 <p>
-                    High availability would be achieved by utilising Linodes nodebalancers. A single nodebalancer would
-                    sit in front of the web servers and round robyn the traffic between them. Memcached was chosen to
+                    High availability would be achieved by utilising Linodes Nodebalancers. A single Nodebalancer would
+                    sit in front of the web servers and round robin the traffic between them. Memcached was chosen to
                     store
                     the sessions information and the Xenforo software adapted to write all session information to each
-                    memcached instance.
+                    Memcached instance.
                 </p>
 
                 <p>
@@ -102,7 +102,7 @@ title = "Architecture"
                     <li>A new thin client Javascript front end client</li>
                     <li>A data warehouse which would store data in third normal form</li>
                     <li>An Extract Transform Load application to perform the data integration</li>
-                    <li>A reporting engine to sit in front of the datawarehouse to render the data in a meaningful way
+                    <li>A reporting engine to sit in front of the data warehouse to render the data in a meaningful way
                     </li>
                 </ul>
 
@@ -111,7 +111,7 @@ title = "Architecture"
                     together
                     to keep costs low and the architecture simple. Thought was given as to how this could be split in
                     the
-                    future however this design best fit the customers needs at the present time. PHP and Javascript
+                    future,however, this design best fit the customer's needs at the present time. PHP and Javascript
                     frameworks
                     were chosen based on the clients existing experience with these technologies.
                 </p>
@@ -128,9 +128,9 @@ title = "Architecture"
                 <p>
                     SendGrid would be used to handle the emailing as this gave the customer far more visibility over
                     emails
-                    that were sent from the reporting engine than before, and would reduce what was a large contributor
+                    that were sent from the reporting engine than before and would reduce what was a large contributor
                     to
-                    the support overheads the customer was having. This also saved on development time of the final
+                    the support overheads the customer was having. This also saved on the development time of the final
                     application.
                 </p>
             </div>
