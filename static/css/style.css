@@ -122,13 +122,10 @@ h3 {
 }
 
 .dropdown-menu {
-    position: initial;
-    left: 0;
     width: 100%;
     border: 2px solid cadetblue;
-    float: none;
-    font-size: 30px;
-    cursor: pointer;
+    margin-bottom: 20px;
+    background-color: white;
 }
 
 .dropdown-item {
@@ -141,6 +138,5 @@ h3 {
     background-color: #0b203a;
     border-color: #0b203a;
 }
-
 
 
