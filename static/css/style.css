@@ -24,6 +24,11 @@ body {
         font-weight: bold;
         font-family: 'Dancing Script', cursive;
     }
+
+    #mobile {
+        display: none;
+    }
+
 }
 
 @media only screen and (max-width: 800px) {
@@ -43,6 +48,10 @@ body {
         font-size: 70px;
         font-weight: bold;
         font-family: 'Dancing Script', cursive;
+    }
+
+    #full-width {
+        display: none;
     }
 }
 
@@ -109,6 +118,27 @@ h3 {
 }
 
 .form-control:focus {
+    border-color: #0b203a;
+}
+
+.dropdown-menu {
+    position: initial;
+    left: 0;
+    width: 100%;
+    border: 2px solid cadetblue;
+    float: none;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.dropdown-item {
+    font-size: 18px;
+    font-family: 'Ledger', serif;
+}
+
+.dropdown-item:hover {
+    color: #fff !important;
+    background-color: #0b203a;
     border-color: #0b203a;
 }
 
