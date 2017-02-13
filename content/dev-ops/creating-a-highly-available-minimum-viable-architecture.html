@@ -195,28 +195,28 @@ node app &amp;</pre>
                 <pre class="prettyprint linenums lang-bash">mkdir /var/www/frontend/log/
 sudo vi /etc/init/nodefrontendapp.conf
 </pre>
-                Paste the following
-                <div class="well">
-                    description "node.js front end server"
-                    author "kvz"
+                <p>
+                And paste in the following the following
+                </p>
+                <pre class="well">
+description "node.js front end server"
+author "kvz"
 
-                    start on startup
-                    stop on shutdown
+start on startup
+stop on shutdown
 
-                    script
-                    # We found $HOME is needed. Without it, we ran into problems
-                    export HOME="/root"
+script
+export HOME="/root"
 
-                    exec /usr/bin/node /var/www/frontend/app.js 2>&1 >> /var/www/frontend/log/node.log
-                    end script
-                </div>
+exec /usr/bin/node /var/www/frontend/app.js 2>&1 >> /var/www/frontend/log/node.log
+end script
+                </pre>
                 Save and exit vi and run the following commands
                 <pre class="prettyprint linenums">sudo chmod u+x /etc/init/nodefrontendapp.conf
 sudo start nodefrontendapp</pre>
 
-                *If you get an unknown job error here check the " have been pasted correctly.
+                <p>Step 5: Set up a cloned server</p>
 
-                <strong>Step 5: Set up a cloned server</strong>
                 <pre class="prettyprint linenums lang-bash">git init .
 git add .
 git commit -m "Inital Commit"
