@@ -1,0 +1,257 @@
++++
+date = "2017-01-26T21:44:58+05:30"
+draft = false
+title = "Node.js: Testing a Node.js API with Mocha, Async, and Should"
+
+aliases = [
+"/node-js-testing-a-node-js-api-with-mocha-async-and-should/"
+]
++++
+
+
+<div class="row">
+
+    <div class="col">
+        <div class="card" style="font-family: 'Open Sans', sans-serif;">
+
+            <div class="card-block">
+
+                <div class="card-title">
+                    <h2
+                            style="font-weight:bold;font-family: 'Nixie One'; margin-bottom: 20px">
+                        Node.js: Testing a Node.js API with Mocha, Async, and Should
+                    </h2>
+                </div>
+
+                <p>Application Overview</p>
+
+                <p>
+                    The API is broken down into bundles, each bundle is stored in a separate folder and contains a model
+                    and
+                    a controller.
+                </p>
+
+                <p>
+                    The application has the following directory structure.
+                </p>
+                <pre class="prettyprint linenums">-/bundles/
+
+-/bundles/foo/model.js
+-/bundles/foo/controller.js
+
+-/bundles/bar/model.js
+-/bundles/bar/controller.js</pre>
+
+                <p>
+                    The controllers extend from a base module called controller.js which implements the
+                    create/review/update/delete code.
+                </p>
+
+                <p>Testing the API</p>
+
+                <p>
+                    The rest of this article will concentrate on the DELETE api call.
+
+                </p>
+                <p>
+
+                    This operation doesn't delete the model, but sets a
+                    sets the flag "isDeleted" against the model to true.
+                </p>
+
+                <p>
+                    Before the test, the code must perform three operations a CREATE, then a DELETE, and finally a READ
+                    where
+                    we'll test the isDeleted flag has been set.
+                </p>
+
+                <p>Breaking down the tests using Mocha</p>
+
+                <p>
+                    First describe the test
+                </p>
+                <pre>
+                    <code class="javascript hljs">describe('API Deletion', function () {
+}
+                    </code>
+                </pre>
+                <p>
+                    This gives a high level description of the tests contained in this file. Everything the code needs
+                    to
+                    perform the test should be defined and instantiated at the top of this function.
+                </p>
+                <pre>
+                    <code class="javascript hljs">describe('Deleting', function () {
+    var should = require('should'),
+         async = require('async'),
+         fs = require('fs'),
+         api = require('./api.js');
+         //Loop through bundles and describe our next step
+}</code>
+                </pre>
+                <p>
+                    The next step is to loop through all the bundles and describe the test specific to the bundle we
+                    want to
+                    test
+                </p>
+                <pre>
+                <code class="javascript hljs">var bundles = fs.readdirSync('./bundles');
+bundles.forEach(function (item) {
+    describe(item, function () {
+    //Call the before function and populate our database with the data to test against
+    }
+}</code>
+                    </pre>
+                <p>
+                    We define a before function that will run the code to create, delete and get the model which we'll
+                    later test for the isDeleted flag.
+                </p>
+
+                <pre>
+                <code class="javascript hjls">var fixture = require('./bundles/fixture.js');
+    var deleteResponse = null;
+
+    before(function (done) {
+
+	async.waterfall([
+
+	function create(callback) {
+	    api.create(fixture, function (error, response, body) {
+		var json = JSON.parse(body);
+		callback(null, json);
+	    });
+	},
+
+	function delete(json, callback) {
+	    api.delete(item, json._id, function (error, response, body) {
+		var deleteResponse = {
+		    id: json._id,
+		    error: error,
+		    body: body
+		};
+		callback(null, deleteResponse)
+	    });
+	},
+
+	function get(deleteResponse, callback) {
+	    api.getOne(item, deleteResponse.id, function (error, response, body) {
+
+		var getResponse = {
+		    id: deleteResponse.id,
+		    error: error,
+		    response: response,
+		    body: body,
+		}
+
+		callback(null, getResponse)
+
+	    });
+	}
+
+	], function (err, results) {
+	    deleteResponse = results;
+	    done();
+	});
+});
+//Define the tests</code>
+                    </pre>
+                <p>
+                    Passing the done callback into the before method allows asynchronous testing of the api.
+                </p>
+
+                <p>
+                    Using the asyc libraries waterfall function we can make sure that the before function is only
+                    completed
+                    once all our API calls are finished.
+                </p>
+
+                <p>
+                    Using async also helps the clarity of the code, the waterfall function allows another developer to
+                    see
+                    exactly the steps going to be taken in the before function and in what order.
+                </p>
+
+
+                <p> The complete solution</p>
+                <pre>
+                <code class="javascript hjls crayon-selected">describe('Deleting', function () {
+    var should = require('should'),
+        async = require('async'),
+        fs = require('fs'),
+        api = require('./api.js');
+
+    //Loop through bundles
+    var bundles = fs.readdirSync('./bundles');
+    bundles.forEach(function (bundle) {
+
+        describe(bundle, function () {
+
+            //Get dummy data
+            var fixture = require('./bundles/fixture.js');
+            var deleteResponse = null;
+
+            //Persist dummy data
+            before(function (done) {
+                async.waterfall([
+
+                function create(callback) {
+                    api.create(fixture, function (error, response, body) {
+                        var json = JSON.parse(body);
+                        callback(null, json);
+                    });
+                },
+
+                function delete(json, callback) {
+                    api.delete(item, json._id, function (error, response, body) {
+                        var deleteResponse = {
+                            id: json._id,
+                            error: error,
+                            body: body
+                        };
+                        callback(null, deleteResponse)
+                    });
+                },
+
+                function get(removeResponse, callback) {
+                    api.getOne(item, removeResponse.id, function (error, response, body) {
+                        var objectResponse = {
+                            id: removeResponse.id,
+                            error: error,
+                            response: response,
+                            body: body,
+                        }
+                        callback(null, objectResponse)
+                    });
+                }],
+               //End of waterfall
+               function (err, results) {
+                    //store results
+                    deleteResponse = results;
+                    //Tell before function everything is done
+                    done();
+                });
+            });
+
+             //Tests
+            it("shouldn't fail", function () {
+                deleteResponse.response.statusCode.should.equal(200);
+            });
+
+            it("should respond with valid JSON", function () {
+                deleteResponse.response.should.be.json;
+            });
+
+            it("should be soft deleted", function () {
+                var json = JSON.parse(deleteResponse.body);
+                json.isDeleted.should.be.equal(true);
+            });
+        }
+        }
+    }</code>
+                    </pre>
+
+
+            </div>
+        </div>
+    </div>
+</div>
